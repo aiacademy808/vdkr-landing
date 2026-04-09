@@ -216,20 +216,29 @@ function saveLocal(){
   setStatus('Сохранено локально','saved');
 }
 
-// GitHub config - repo/branch hardcoded, token saved in localStorage after first entry
+// GitHub config
 const GH_REPO='aiacademy808/vdkr-landing';
 const GH_BRANCH='main';
+const GH_TOKEN_SHEET='https://docs.google.com/spreadsheets/d/1GjD-w-DRS4ZD05DbXu__8ALMfX99_QzjHU7S-JlyWCw/gviz/tq?tqx=out:csv';
+let ghToken='';
+
+// Fetch token from Google Sheet on load
+async function fetchGhToken(){
+  try{
+    const r=await fetch(GH_TOKEN_SHEET);
+    const csv=await r.text();
+    const match=csv.match(/ghp_[A-Za-z0-9_]+/);
+    if(match)ghToken=match[0];
+  }catch(e){console.log('Token fetch failed',e)}
+}
+fetchGhToken();
 
 // Publish - push to GitHub
 async function publish(){
   collectForm();
-  let token=localStorage.getItem('vdkr_gh_token');
-  if(!token){
-    token=prompt('Введите GitHub токен (нужен только один раз):');
-    if(!token)return;
-    localStorage.setItem('vdkr_gh_token',token);
-  }
-  const cfg={token:token,repo:GH_REPO,branch:GH_BRANCH};
+  if(!ghToken){await fetchGhToken()}
+  if(!ghToken){ghToken=prompt('Не удалось загрузить токен. Введите вручную:');if(!ghToken)return}
+  const cfg={token:ghToken,repo:GH_REPO,branch:GH_BRANCH};
 
   setStatus('Публикация...','publishing');
 
