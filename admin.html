@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VDKR Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#1A1714;--terra:#C4603A;--terra2:#D97B52;--gold:#C9A84C;--ivory:#FAF6F0;--muted:#8A8178;--green:#2E7D32;--red:#C62828}
+body{font-family:'Jost',sans-serif;background:#0f0f0f;color:#e0e0e0;min-height:100vh}
+
+/* Login */
+.login-overlay{position:fixed;inset:0;background:#0f0f0f;z-index:1000;display:flex;align-items:center;justify-content:center}
+.login-box{background:#1a1a1a;border:1px solid #333;border-radius:16px;padding:48px;max-width:380px;width:100%;text-align:center}
+.login-box h2{font-size:22px;margin-bottom:8px;color:#fff}
+.login-box p{font-size:13px;color:#666;margin-bottom:28px}
+.login-box input{width:100%;padding:12px 16px;border:1px solid #333;border-radius:8px;background:#111;color:#fff;font-size:15px;font-family:'Jost',sans-serif;margin-bottom:16px;outline:none}
+.login-box input:focus{border-color:var(--terra)}
+.login-box button{width:100%;padding:12px;background:var(--terra);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Jost',sans-serif}
+.login-box button:hover{background:var(--terra2)}
+.login-error{color:var(--red);font-size:13px;margin-top:8px;display:none}
+
+/* Layout */
+.admin{display:none}
+.admin-header{background:#1a1a1a;border-bottom:1px solid #222;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.admin-header h1{font-size:18px;font-weight:500;color:#fff}
+.admin-header h1 span{color:var(--terra)}
+.admin-actions{display:flex;gap:10px}
+.btn{padding:10px 24px;border-radius:8px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'Jost',sans-serif;transition:all .3s;display:inline-flex;align-items:center;gap:6px}
+.btn-save{background:#222;color:#ccc;border:1px solid #333}
+.btn-save:hover{border-color:var(--gold);color:var(--gold)}
+.btn-publish{background:var(--green);color:#fff}
+.btn-publish:hover{background:#388E3C}
+.btn-logout{background:transparent;color:#666;font-size:13px;padding:8px 16px}
+.btn-logout:hover{color:var(--red)}
+
+.admin-body{max-width:900px;margin:0 auto;padding:32px}
+
+/* Sections */
+.admin-section{background:#1a1a1a;border:1px solid #222;border-radius:12px;margin-bottom:20px;overflow:hidden}
+.admin-section-header{padding:16px 24px;background:#161616;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.admin-section-header h2{font-size:16px;font-weight:500;color:#ccc}
+.admin-section-header .toggle-icon{color:#555;font-size:18px;transition:transform .3s}
+.admin-section.open .toggle-icon{transform:rotate(45deg);color:var(--terra)}
+.admin-section-body{display:none;padding:24px}
+.admin-section.open .admin-section-body{display:block}
+
+/* Form elements */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;color:#888;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.field input,.field textarea,.field select{width:100%;padding:10px 14px;border:1px solid #333;border-radius:8px;background:#111;color:#e0e0e0;font-size:14px;font-family:'Jost',sans-serif;outline:none;transition:border-color .3s}
+.field input:focus,.field textarea:focus{border-color:var(--terra)}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* Cards editor */
+.card-editor{border:1px solid #2a2a2a;border-radius:10px;padding:20px;margin-bottom:16px;position:relative}
+.card-editor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-editor-title{font-size:15px;font-weight:500;color:var(--gold)}
+.card-toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:#888}
+.card-toggle input[type=checkbox]{accent-color:var(--terra);width:16px;height:16px}
+
+/* List editor */
+.list-editor{margin-bottom:12px}
+.list-item{display:flex;gap:8px;margin-bottom:6px}
+.list-item input{flex:1}
+.list-item button{background:#222;border:1px solid #333;color:#888;width:32px;border-radius:6px;cursor:pointer;font-size:14px}
+.list-item button:hover{border-color:var(--red);color:var(--red)}
+.btn-add-item{background:transparent;border:1px dashed #333;color:#666;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;width:100%;font-family:'Jost',sans-serif}
+.btn-add-item:hover{border-color:var(--terra);color:var(--terra)}
+
+/* FAQ editor */
+.faq-editor{border:1px solid #2a2a2a;border-radius:10px;padding:20px;margin-bottom:12px}
+.faq-editor-q{font-size:13px;font-weight:500;color:var(--gold);margin-bottom:8px}
+
+/* Status bar */
+.status-bar{position:fixed;bottom:0;left:0;right:0;padding:12px 32px;background:#111;border-top:1px solid #222;display:flex;align-items:center;justify-content:space-between;z-index:50;font-size:13px}
+.status-text{color:#555}
+.status-text.saved{color:var(--gold)}
+.status-text.publishing{color:var(--terra)}
+.status-text.published{color:var(--green)}
+.status-text.error{color:var(--red)}
+
+/* GitHub config modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#1a1a1a;border:1px solid #333;border-radius:16px;padding:36px;max-width:500px;width:90%}
+.modal h3{font-size:18px;margin-bottom:8px;color:#fff}
+.modal p{font-size:13px;color:#666;margin-bottom:20px;line-height:1.6}
+.modal .field{margin-bottom:14px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
+.btn-cancel{background:#222;color:#aaa;border:1px solid #333}
+
+@media(max-width:768px){
+  .admin-header{padding:12px 16px}
+  .admin-body{padding:16px}
+  .field-row,.field-row-3{grid-template-columns:1fr}
+  .admin-actions{gap:6px}
+  .btn{padding:8px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h2>VDKR Admin</h2>
+    <p>Панель управления контентом</p>
+    <input type="password" id="loginPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Войти</button>
+    <div class="login-error" id="loginError">Неверный пароль</div>
+  </div>
+</div>
+
+<!-- GitHub config modal -->
+<div class="modal-overlay" id="ghModal">
+  <div class="modal">
+    <h3>Настройки GitHub</h3>
+    <p>Для публикации нужен GitHub токен с правами на запись в репозиторий. Создайте его на <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener" style="color:var(--terra)">github.com/settings/tokens</a> (scope: repo).</p>
+    <div class="field">
+      <label>GitHub Token</label>
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    </div>
+    <div class="field">
+      <label>Репозиторий (owner/repo)</label>
+      <input type="text" id="ghRepo" placeholder="aiacademy808/vdkr-landing">
+    </div>
+    <div class="field">
+      <label>Ветка</label>
+      <input type="text" id="ghBranch" value="main" placeholder="main">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" onclick="closeGhModal()">Отмена</button>
+      <button class="btn btn-publish" onclick="saveGhConfig()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin panel -->
+<div class="admin" id="admin">
+  <header class="admin-header">
+    <h1><span>VDKR</span> Admin Panel</h1>
+    <div class="admin-actions">
+      <button class="btn btn-save" onclick="saveLocal()">💾 Сохранить</button>
+      <button class="btn btn-publish" onclick="publish()">🚀 Опубликовать</button>
+      <button class="btn btn-logout" onclick="logout()">Выйти</button>
+    </div>
+  </header>
+
+  <div class="admin-body" id="adminBody">
+    <!-- Sections will be rendered by JS -->
+  </div>
+</div>
+
+<div class="status-bar">
+  <div class="status-text" id="status">Готово</div>
+  <div style="color:#555;font-size:12px">VDKR Admin v1.0</div>
+</div>
+
+<script>
+const ADMIN_PASS='vdkr2025';
+let content={};
+
+// Auth
+function doLogin(){
+  if(document.getElementById('loginPass').value===ADMIN_PASS){
+    localStorage.setItem('vdkr_auth','1');
+    document.getElementById('loginOverlay').style.display='none';
+    document.getElementById('admin').style.display='block';
+    loadContent();
+  }else{
+    document.getElementById('loginError').style.display='block';
+  }
+}
+function logout(){localStorage.removeItem('vdkr_auth');location.reload()}
+if(localStorage.getItem('vdkr_auth')==='1'){
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('admin').style.display='block';
+}
+
+// GitHub modal
+function openGhModal(){document.getElementById('ghModal').classList.add('show');
+  const cfg=JSON.parse(localStorage.getItem('vdkr_gh')||'{}');
+  if(cfg.token)document.getElementById('ghToken').value=cfg.token;
+  if(cfg.repo)document.getElementById('ghRepo').value=cfg.repo;
+  if(cfg.branch)document.getElementById('ghBranch').value=cfg.branch;
+}
+function closeGhModal(){document.getElementById('ghModal').classList.remove('show')}
+function saveGhConfig(){
+  const cfg={token:document.getElementById('ghToken').value,repo:document.getElementById('ghRepo').value,branch:document.getElementById('ghBranch').value||'main'};
+  localStorage.setItem('vdkr_gh',JSON.stringify(cfg));
+  closeGhModal();
+  setStatus('GitHub настроен','saved');
+}
+
+// Status
+function setStatus(msg,cls){const el=document.getElementById('status');el.textContent=msg;el.className='status-text '+(cls||'')}
+
+// Load content
+async function loadContent(){
+  try{
+    const local=localStorage.getItem('vdkr_content');
+    if(local){content=JSON.parse(local)}
+    else{const r=await fetch('content.json');content=await r.json();localStorage.setItem('vdkr_content',JSON.stringify(content))}
+    renderAdmin();
+  }catch(e){setStatus('Ошибка загрузки: '+e.message,'error')}
+}
+
+// Save to localStorage
+function saveLocal(){
+  collectForm();
+  localStorage.setItem('vdkr_content',JSON.stringify(content));
+  setStatus('Сохранено локально','saved');
+}
+
+// Publish - push to GitHub
+async function publish(){
+  collectForm();
+  const cfg=JSON.parse(localStorage.getItem('vdkr_gh')||'{}');
+  if(!cfg.token||!cfg.repo){openGhModal();return}
+
+  setStatus('Публикация...','publishing');
+
+  try{
+    const path='content.json';
+    const api='https://api.github.com/repos/'+cfg.repo+'/contents/'+path;
+    const headers={'Authorization':'Bearer '+cfg.token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+
+    // Get current file SHA
+    let sha='';
+    try{const r=await fetch(api+'?ref='+(cfg.branch||'main'),{headers});if(r.ok){const d=await r.json();sha=d.sha}}catch(e){}
+
+    // Update file
+    const body={message:'Update content via admin panel',content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2)))),branch:cfg.branch||'main'};
+    if(sha)body.sha=sha;
+
+    const res=await fetch(api,{method:'PUT',headers,body:JSON.stringify(body)});
+    if(!res.ok){const e=await res.json();throw new Error(e.message||'GitHub API error')}
+
+    localStorage.setItem('vdkr_content',JSON.stringify(content));
+    setStatus('Опубликовано! Vercel деплоит...','published');
+  }catch(e){
+    setStatus('Ошибка: '+e.message,'error');
+  }
+}
+
+// Collect form data back into content object
+function collectForm(){
+  // Hero
+  content.hero.eyebrow=v('hero_eyebrow');
+  content.hero.h1_line1=v('hero_h1_1');
+  content.hero.h1_line2=v('hero_h1_2');
+  content.hero.subtitle=v('hero_sub');
+  content.hero.btn_primary=v('hero_btn1');
+  content.hero.btn_secondary=v('hero_btn2');
+  content.hero.note=v('hero_note');
+  content.hero.badges=getList('hero_badges');
+  content.hero.stats.forEach((s,i)=>{s.num=v('stat_num_'+i);s.label=v('stat_label_'+i)});
+
+  // Products
+  content.products.title=v('prod_title');
+  content.products.subtitle=v('prod_sub');
+  content.products.cards.forEach((card,i)=>{
+    card.visible=document.getElementById('card_vis_'+i).checked;
+    card.badge=v('card_badge_'+i);
+    card.title=v('card_title_'+i);
+    card.promo=v('card_promo_'+i);
+    card.price=v('card_price_'+i);
+    card.price_sub=v('card_pricesub_'+i);
+    card.deadline=v('card_deadline_'+i);
+    card.btn_text=v('card_btn_'+i);
+    card.wa_text=v('card_wa_'+i);
+    card.list=getList('card_list_'+i);
+  });
+
+  // Why
+  content.why.title=v('why_title');
+  content.why.subtitle=v('why_sub');
+  content.why.cards.forEach((c,i)=>{c.icon=v('why_icon_'+i);c.title=v('why_t_'+i);c.text=v('why_p_'+i)});
+
+  // Promo
+  content.promo.visible=document.getElementById('promo_vis').checked;
+  content.promo.title=v('promo_title');
+  content.promo.subtitle=v('promo_sub');
+  content.promo.btn_text=v('promo_btn');
+  content.promo.wa_text=v('promo_wa');
+  content.promo.gifts=getList('promo_gifts');
+
+  // FAQ
+  content.faq.title=v('faq_title');
+  content.faq.subtitle=v('faq_sub');
+  content.faq.items.forEach((item,i)=>{item.q=v('faq_q_'+i);item.a=v('faq_a_'+i)});
+
+  // CTA
+  content.cta.title=v('cta_title');
+  content.cta.subtitle=v('cta_sub');
+  content.cta.btn_text=v('cta_btn');
+  content.cta.info=v('cta_info');
+
+  // Contacts
+  content.contacts.whatsapp=v('c_wa');
+  content.contacts.instagram=v('c_ig');
+  content.contacts.phone=v('c_phone');
+  content.contacts.phone2=v('c_phone2');
+  content.contacts.email=v('c_email');
+  content.contacts.address=v('c_addr');
+}
+
+function v(id){const el=document.getElementById(id);return el?el.value:''}
+function getList(prefix){
+  const items=[];
+  document.querySelectorAll('[data-list="'+prefix+'"] input').forEach(inp=>items.push(inp.value));
+  return items;
+}
+
+// Render admin form
+function renderAdmin(){
+  const h=content.hero,p=content.products,w=content.why,pr=content.promo,f=content.faq,ct=content.cta,co=content.contacts;
+  let html='';
+
+  // Hero section
+  html+=section('Hero - Главный экран',`
+    ${field('hero_eyebrow','Eyebrow текст',h.eyebrow)}
+    <div class="field-row">
+      ${field('hero_h1_1','Заголовок строка 1',h.h1_line1)}
+      ${field('hero_h1_2','Заголовок строка 2 (курсив)',h.h1_line2)}
+    </div>
+    ${textarea('hero_sub','Подзаголовок',h.subtitle)}
+    <div class="field-row">
+      ${field('hero_btn1','Кнопка 1',h.btn_primary)}
+      ${field('hero_btn2','Кнопка 2',h.btn_secondary)}
+    </div>
+    ${listEditor('hero_badges','Бейджи',h.badges)}
+    <h3 style="color:#888;font-size:14px;margin:20px 0 12px">Статистика</h3>
+    ${h.stats.map((s,i)=>'<div class="field-row">'+field('stat_num_'+i,'Число',s.num)+field('stat_label_'+i,'Подпись',s.label)+'</div>').join('')}
+    ${textarea('hero_note','Примечание',h.note)}
+  `,true);
+
+  // Products
+  html+=section('Продукты - Три программы',`
+    <div class="field-row">
+      ${field('prod_title','Заголовок секции',p.title)}
+      ${field('prod_sub','Подзаголовок',p.subtitle)}
+    </div>
+    ${p.cards.map((card,i)=>`
+      <div class="card-editor">
+        <div class="card-editor-header">
+          <div class="card-editor-title">${card.title}</div>
+          <div class="card-toggle"><input type="checkbox" id="card_vis_${i}" ${card.visible?'checked':''}> Видимая</div>
+        </div>
+        <div class="field-row">
+          ${field('card_badge_'+i,'Бейдж',card.badge)}
+          ${field('card_title_'+i,'Заголовок',card.title)}
+        </div>
+        ${field('card_promo_'+i,'Промо текст',card.promo)}
+        ${listEditor('card_list_'+i,'Список преимуществ',card.list)}
+        <div class="field-row-3">
+          ${field('card_price_'+i,'Цена',card.price)}
+          ${field('card_pricesub_'+i,'Подпись цены',card.price_sub)}
+          ${field('card_deadline_'+i,'Дедлайн',card.deadline)}
+        </div>
+        <div class="field-row">
+          ${field('card_btn_'+i,'Текст кнопки',card.btn_text)}
+          ${field('card_wa_'+i,'WhatsApp текст',card.wa_text)}
+        </div>
+      </div>
+    `).join('')}
+  `);
+
+  // Why Us
+  html+=section('Преимущества',`
+    <div class="field-row">
+      ${field('why_title','Заголовок',w.title)}
+      ${field('why_sub','Подзаголовок',w.subtitle)}
+    </div>
+    ${w.cards.map((c,i)=>`
+      <div class="card-editor">
+        <div class="field-row-3">
+          ${field('why_icon_'+i,'Иконка',c.icon)}
+          ${field('why_t_'+i,'Заголовок',c.title)}
+          ${field('why_p_'+i,'Текст',c.text)}
+        </div>
+      </div>
+    `).join('')}
+  `);
+
+  // Promo
+  html+=section('Акционный баннер',`
+    <div class="card-toggle" style="margin-bottom:16px"><input type="checkbox" id="promo_vis" ${pr.visible?'checked':''}> Показывать секцию</div>
+    ${field('promo_title','Заголовок',pr.title)}
+    ${field('promo_sub','Подзаголовок',pr.subtitle)}
+    ${listEditor('promo_gifts','Подарки',pr.gifts)}
+    <div class="field-row">
+      ${field('promo_btn','Текст кнопки',pr.btn_text)}
+      ${field('promo_wa','WhatsApp текст',pr.wa_text)}
+    </div>
+  `);
+
+  // FAQ
+  html+=section('FAQ - Вопросы',`
+    <div class="field-row">
+      ${field('faq_title','Заголовок',f.title)}
+      ${field('faq_sub','Подзаголовок',f.subtitle)}
+    </div>
+    ${f.items.map((item,i)=>`
+      <div class="faq-editor">
+        ${field('faq_q_'+i,'Вопрос '+(i+1),item.q)}
+        ${textarea('faq_a_'+i,'Ответ',item.a)}
+      </div>
+    `).join('')}
+  `);
+
+  // CTA
+  html+=section('Финальный CTA',`
+    ${field('cta_title','Заголовок',ct.title)}
+    ${field('cta_sub','Подзаголовок',ct.subtitle)}
+    ${field('cta_btn','Текст кнопки',ct.btn_text)}
+    ${field('cta_info','Информация',ct.info)}
+  `);
+
+  // Contacts
+  html+=section('Контакты и ссылки',`
+    <div class="field-row">
+      ${field('c_wa','WhatsApp номер',co.whatsapp)}
+      ${field('c_ig','Instagram URL',co.instagram)}
+    </div>
+    <div class="field-row">
+      ${field('c_phone','Телефон',co.phone)}
+      ${field('c_phone2','Телефон 2',co.phone2)}
+    </div>
+    <div class="field-row">
+      ${field('c_email','Email',co.email)}
+      ${field('c_addr','Адрес',co.address)}
+    </div>
+  `);
+
+  // GitHub config
+  html+=section('⚙ Настройки GitHub',`
+    <p style="color:#666;font-size:13px;margin-bottom:16px">Для публикации контент пушится в GitHub, после чего Vercel автоматически деплоит сайт.</p>
+    <button class="btn btn-save" onclick="openGhModal()">Настроить GitHub</button>
+  `);
+
+  document.getElementById('adminBody').innerHTML=html;
+
+  // Open first section by default
+  document.querySelector('.admin-section').classList.add('open');
+}
+
+// Helpers
+function section(title,body,open){
+  return`<div class="admin-section${open?' open':''}"><div class="admin-section-header" onclick="this.parentElement.classList.toggle('open')"><h2>${title}</h2><div class="toggle-icon">+</div></div><div class="admin-section-body">${body}</div></div>`;
+}
+function field(id,label,val){
+  return`<div class="field"><label>${label}</label><input type="text" id="${id}" value="${esc(val||'')}"></div>`;
+}
+function textarea(id,label,val){
+  return`<div class="field"><label>${label}</label><textarea id="${id}">${esc(val||'')}</textarea></div>`;
+}
+function listEditor(prefix,label,items){
+  let h=`<div class="field"><label>${label}</label><div class="list-editor" data-list="${prefix}">`;
+  (items||[]).forEach((item,i)=>{
+    h+=`<div class="list-item"><input type="text" value="${esc(item)}"><button onclick="this.parentElement.remove()">×</button></div>`;
+  });
+  h+=`</div><button class="btn-add-item" onclick="addListItem(this,'${prefix}')">+ Добавить</button></div>`;
+  return h;
+}
+function addListItem(btn,prefix){
+  const container=btn.previousElementSibling;
+  container.insertAdjacentHTML('beforeend','<div class="list-item"><input type="text" value=""><button onclick="this.parentElement.remove()">×</button></div>');
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// Init
+if(localStorage.getItem('vdkr_auth')==='1')loadContent();
+</script>
+</body>
+</html>

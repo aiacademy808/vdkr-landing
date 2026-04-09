@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VDKR - Немецкий дом | Курсы немецкого языка в Бишкеке</title>
+<link rel="icon" href="favicon.ico" type="image/png">
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+<meta name="description" content="Курсы немецкого языка в Бишкеке. Языковой ассистент из Германии, экзамен TELC, интенсивы. VDKR - с 1992 года.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --dark:#1A1714;--dark2:#252220;--ivory:#FAF6F0;--warm:#F2EBE0;
+  --terra:#C4603A;--terra2:#D97B52;--sand:#E8D8C0;--gold:#C9A84C;
+  --muted:#8A8178;--white:#FFFFFF;--text:#2A2520;
+}
+body{font-family:'Jost',sans-serif;color:var(--text);background:var(--ivory);overflow-x:hidden;font-weight:300;font-size:17px;line-height:1.8}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:'Jost',sans-serif}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ===== SECTION COMMON ===== */
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,54px);font-weight:700;color:var(--dark);margin-bottom:8px}
+.section-sub{font-size:15px;color:var(--muted);letter-spacing:.03em;font-weight:400;margin-bottom:48px}
+
+/* ===============================
+   SECTION 1 - HEADER
+================================ */
+.header{position:fixed;top:16px;left:48px;right:48px;z-index:100;background:rgba(26,23,20,.55);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;border-radius:16px;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 32px rgba(26,23,20,.12),inset 0 1px 0 rgba(255,255,255,.06);transition:background .4s}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-logo{width:40px;height:40px;border-radius:8px;object-fit:contain}
+.logo-fallback{width:40px;height:40px;background:rgba(201,168,76,.15);backdrop-filter:blur(8px);border:1px solid rgba(201,168,76,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:700;font-size:19px}
+.header-brand{color:rgba(255,255,255,.9);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600}
+.header-brand small{display:block;font-family:'Jost',sans-serif;font-size:10px;color:rgba(255,255,255,.35);font-weight:300;letter-spacing:.05em}
+.header-nav{display:flex;gap:4px;align-items:center}
+.header-nav a{color:rgba(255,255,255,.5);font-size:13px;font-weight:400;letter-spacing:.02em;transition:all .3s;padding:6px 16px;border-radius:10px}
+.header-nav a:hover{color:rgba(255,255,255,.95);background:rgba(255,255,255,.08)}
+.header-cta{background:rgba(196,96,58,.8);backdrop-filter:blur(8px);color:var(--white);border:1px solid rgba(196,96,58,.3);padding:9px 24px;border-radius:10px;font-size:13px;font-weight:500;letter-spacing:.02em;transition:all .3s;border:none}
+.header-cta:hover{background:rgba(217,123,82,.9);box-shadow:0 4px 20px rgba(196,96,58,.3)}
+
+/* ===============================
+   SECTION 2 - HERO
+================================ */
+.hero{min-height:100vh;padding:100px 48px 80px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--ivory)}
+
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;pointer-events:none;animation:float 12s ease-in-out infinite}
+.blob-1{width:500px;height:500px;background:var(--terra);top:-100px;right:-80px}
+.blob-2{width:400px;height:400px;background:var(--gold);bottom:-60px;left:-60px;animation-delay:-4s}
+.blob-3{width:350px;height:350px;background:var(--terra2);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-8s}
+.blob-4{width:280px;height:280px;background:var(--sand);top:10%;left:20%;animation-delay:-2s}
+.blob-5{width:200px;height:200px;background:#CC0000;bottom:15%;right:20%;opacity:.15;animation-delay:-6s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-20px) scale(1.05)}
+  66%{transform:translate(-20px,15px) scale(.95)}
+}
+
+.flag-stripe{position:absolute;top:0;right:0;width:4px;height:100%;display:flex;flex-direction:column;z-index:3}
+.flag-stripe span{flex:1}
+.flag-stripe span:nth-child(1){background:#1C1C1C}
+.flag-stripe span:nth-child(2){background:#CC0000}
+.flag-stripe span:nth-child(3){background:#FFCE00}
+
+.glass-card{position:relative;z-index:2;background:rgba(255,255,255,.45);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.6);border-radius:24px;padding:64px;max-width:1200px;width:100%;display:grid;grid-template-columns:58% 42%;gap:48px;align-items:center;box-shadow:0 8px 32px rgba(26,23,20,.06),inset 0 1px 0 rgba(255,255,255,.8)}
+
+.hero-left{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px;font-size:13px;color:var(--terra);letter-spacing:.04em;font-weight:500}
+.mini-flag{width:20px;height:15px;display:flex;flex-direction:column;border-radius:2px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15);flex-shrink:0}
+.mini-flag span{flex:1}
+.mini-flag span:nth-child(1){background:#1C1C1C}
+.mini-flag span:nth-child(2){background:#CC0000}
+.mini-flag span:nth-child(3){background:#FFCE00}
+.eyebrow-line{width:32px;height:1px;background:var(--terra);opacity:.5}
+
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,5.5vw,72px);font-weight:700;line-height:1.08;color:var(--dark);margin-bottom:24px}
+h1 em{font-style:italic;color:var(--terra2);font-weight:600}
+
+.hero-sub{font-size:17px;line-height:1.8;font-weight:300;color:var(--muted);max-width:480px;margin-bottom:36px}
+
+.hero-buttons{display:flex;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+.btn-primary{background:var(--terra);color:var(--white);border:none;padding:14px 32px;border-radius:6px;font-size:15px;font-weight:500;transition:all .3s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(196,96,58,.3)}
+.btn-primary:hover{background:var(--terra2);transform:translateY(-1px);box-shadow:0 6px 28px rgba(196,96,58,.4)}
+.btn-secondary{background:rgba(255,255,255,.5);color:var(--text);border:1px solid rgba(138,129,120,.2);padding:14px 28px;border-radius:6px;font-size:15px;font-weight:400;transition:all .3s;backdrop-filter:blur(8px)}
+.btn-secondary:hover{border-color:var(--terra);color:var(--terra);background:rgba(255,255,255,.7)}
+
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.5);padding:8px 16px;border-radius:40px;font-size:13px;font-weight:400;color:var(--text);letter-spacing:.02em;transition:all .3s}
+.badge:hover{border-color:var(--terra);color:var(--terra);background:rgba(255,255,255,.8)}
+
+.hero-right{display:flex;flex-direction:column;align-items:center;gap:24px;position:relative;z-index:2}
+.flag-big{width:100%;max-width:320px;aspect-ratio:5/3;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);position:relative}
+.flag-big span{display:block;height:33.33%}
+.flag-big span:nth-child(1){background:#1C1C1C}
+.flag-big span:nth-child(2){background:#CC0000}
+.flag-big span:nth-child(3){background:#FFCE00}
+.flag-big::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25) 0%,transparent 50%,rgba(0,0,0,.08) 100%);pointer-events:none}
+.flag-label{position:absolute;bottom:10px;right:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(255,255,255,.7);text-shadow:0 1px 4px rgba(0,0,0,.4)}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:320px}
+.stat-card{background:rgba(255,255,255,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:16px;text-align:center;transition:all .3s}
+.stat-card:hover{background:rgba(255,255,255,.75);border-color:var(--gold)}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--dark)}
+.stat-label{font-size:12px;color:var(--muted);letter-spacing:.03em;font-weight:400;margin-top:2px}
+.hero-note{background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:var(--muted);max-width:320px}
+
+.flag-mobile{display:none;width:100%;max-width:280px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.08);position:relative}
+.flag-mobile span{display:block;height:28px}
+.flag-mobile span:nth-child(1){background:#1C1C1C}
+.flag-mobile span:nth-child(2){background:#CC0000}
+.flag-mobile span:nth-child(3){background:#FFCE00}
+.flag-mobile::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,transparent 50%,rgba(0,0,0,.06) 100%);pointer-events:none}
+.flag-mobile-label{position:absolute;bottom:6px;right:10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(255,255,255,.6);text-shadow:0 1px 3px rgba(0,0,0,.4)}
+
+/* ===============================
+   SECTION 3 - PRODUCTS
+================================ */
+.products{background:var(--warm);padding:100px 48px;text-align:center}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto}
+.product-card{background:var(--white);border-radius:14px;overflow:hidden;text-align:left;transition:all .4s;box-shadow:0 2px 12px rgba(26,23,20,.04);position:relative;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 18px 48px rgba(26,23,20,.1)}
+.product-card.featured{border:1px solid var(--terra);box-shadow:0 4px 24px rgba(196,96,58,.1)}
+.card-stripe{height:4px;width:100%}
+.card-stripe.purple{background:linear-gradient(90deg,#2C1654,#7B4FA6)}
+.card-stripe.terra{background:linear-gradient(90deg,#C4603A,#D97B52)}
+.card-stripe.blue{background:linear-gradient(90deg,#1A5276,#5DADE2)}
+.card-body{padding:28px 24px;flex:1;display:flex;flex-direction:column}
+.card-badge{display:inline-block;font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--muted);margin-bottom:12px}
+.card-hot{display:inline-block;background:var(--terra);color:var(--white);font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-left:8px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--dark);margin-bottom:16px}
+.card-promo{background:rgba(196,96,58,.06);border:1px solid rgba(196,96,58,.12);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--terra);margin-bottom:18px;line-height:1.5}
+.card-list{list-style:none;margin-bottom:24px;flex:1}
+.card-list li{padding:6px 0;font-size:14px;color:var(--text);font-weight:300;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.card-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.card-price-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.card-deadline{font-size:12px;color:var(--terra);font-weight:500;margin-bottom:16px;letter-spacing:.02em}
+.card-btn{display:block;text-align:center;padding:14px;border-radius:8px;font-size:14px;font-weight:500;letter-spacing:.02em;transition:all .3s;border:none;width:100%}
+.card-btn.dark{background:var(--dark);color:var(--white)}
+.card-btn.dark:hover{background:var(--dark2)}
+.card-btn.terra{background:var(--terra);color:var(--white)}
+.card-btn.terra:hover{background:var(--terra2)}
+.card-btn.blue{background:#1A5276;color:var(--white)}
+.card-btn.blue:hover{background:#2471A3}
+
+/* ===============================
+   SECTION 4 - WHY US
+================================ */
+.why{background:var(--ivory);padding:100px 48px;text-align:center}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.why-card{background:var(--white);border:1px solid rgba(138,129,120,.08);border-radius:14px;padding:32px 28px;text-align:left;transition:all .4s}
+.why-card:hover{border-color:var(--terra);transform:translateY(-4px);box-shadow:0 18px 48px rgba(26,23,20,.1)}
+.why-icon{font-size:28px;margin-bottom:16px}
+.why-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:10px}
+.why-card p{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* ===============================
+   SECTION 5 - PROMO BANNER
+================================ */
+.promo{background:var(--dark2);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.promo::before{content:'';position:absolute;top:-50%;left:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(196,96,58,.15),transparent 70%);pointer-events:none}
+.promo::after{content:'';position:absolute;bottom:-50%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);pointer-events:none}
+.promo-content{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.promo h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--white);margin-bottom:12px}
+.promo .promo-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--terra2);margin-bottom:32px}
+.promo-gifts{display:flex;gap:14px;justify-content:center;margin-bottom:36px;flex-wrap:wrap}
+.promo-gift{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:12px 24px;border-radius:10px;color:rgba(255,255,255,.85);font-size:15px;font-weight:400;backdrop-filter:blur(8px)}
+.promo .btn-primary{padding:16px 40px;font-size:16px;border-radius:8px}
+
+/* ===============================
+   SECTION 6 - GALLERY
+================================ */
+.gallery{background:var(--warm);padding:100px 48px;text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1200px;margin:0 auto 40px}
+.gallery-item{aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--sand);display:flex;align-items:center;justify-content:center;position:relative;transition:all .4s}
+.gallery-item:hover{transform:translateY(-4px);box-shadow:0 18px 48px rgba(26,23,20,.1)}
+.gallery-placeholder{font-size:14px;color:var(--muted);text-align:center;padding:20px;line-height:1.6}
+.gallery-placeholder span{display:block;font-size:36px;margin-bottom:10px}
+.gallery-btn{display:inline-flex;align-items:center;gap:8px;color:var(--terra);font-size:15px;font-weight:500;letter-spacing:.02em;transition:color .3s;padding:10px 24px;border:1px solid var(--terra);border-radius:8px}
+.gallery-btn:hover{background:var(--terra);color:var(--white)}
+
+/* ===============================
+   SECTION 7 - FAQ
+================================ */
+.faq{background:var(--sand);padding:100px 48px;text-align:center}
+.faq-list{max-width:800px;margin:0 auto;text-align:left}
+.faq-item{background:var(--white);border-radius:12px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(138,129,120,.08);transition:border-color .3s}
+.faq-item.open{border-color:var(--terra)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;font-size:16px;font-weight:500;color:var(--dark);gap:16px;transition:color .3s;-webkit-user-select:none;user-select:none}
+.faq-q:hover{color:var(--terra)}
+.faq-toggle{width:28px;height:28px;border-radius:50%;background:var(--dark);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .3s;line-height:1}
+.faq-item.open .faq-toggle{background:var(--terra);transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.faq-a-inner{padding:0 24px 20px;font-size:15px;color:var(--muted);line-height:1.8;font-weight:300}
+
+/* ===============================
+   SECTION 8 - FINAL CTA
+================================ */
+.cta{background:var(--dark);padding:100px 48px;text-align:center}
+.cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--white);margin-bottom:16px}
+.cta p{font-size:17px;color:rgba(255,255,255,.5);margin-bottom:40px;font-weight:300}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--terra);color:var(--white);padding:18px 44px;border-radius:8px;font-size:17px;font-weight:500;transition:all .3s;border:none;box-shadow:0 4px 24px rgba(196,96,58,.3)}
+.cta-btn:hover{background:var(--terra2);transform:translateY(-2px);box-shadow:0 8px 36px rgba(196,96,58,.4)}
+.cta-btn svg{width:22px;height:22px;fill:currentColor}
+.cta-info{margin-top:40px;font-size:14px;color:rgba(255,255,255,.3);letter-spacing:.02em;line-height:1.8}
+
+/* ===============================
+   SECTION 9 - FOOTER
+================================ */
+.footer{background:#110E0C;padding:48px 48px 32px}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.footer-col h4{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:16px}
+.footer-col p,.footer-col a{font-size:13px;color:rgba(255,255,255,.35);line-height:1.8;display:block;transition:color .3s}
+.footer-col a:hover{color:var(--terra)}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:8px}
+.footer-brand-sub{font-size:12px;color:rgba(255,255,255,.25);line-height:1.6;margin-bottom:12px}
+.footer-bmi{font-size:11px;color:rgba(255,255,255,.2);line-height:1.6;border-top:1px solid rgba(255,255,255,.06);padding-top:12px;margin-top:8px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding-top:24px;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2)}
+.footer-socials{display:flex;gap:20px}
+.footer-socials a{color:rgba(255,255,255,.3);font-size:12px;transition:color .3s;letter-spacing:.02em}
+.footer-socials a:hover{color:var(--terra)}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media(max-width:960px){
+  /* Header */
+  .header{left:12px;right:12px;top:10px;padding:0 14px;height:52px;border-radius:14px;gap:0}
+  .header-left{gap:8px}
+  .logo-fallback,.header-logo{width:32px;height:32px;font-size:16px;border-radius:8px}
+  .header-brand{font-size:14px}
+  .header-brand small{font-size:9px}
+  .header-nav{display:none}
+  .header-cta{padding:7px 16px;font-size:12px;border-radius:8px;white-space:nowrap;flex-shrink:0}
+
+  /* Hero */
+  .hero{padding:80px 12px 40px}
+  .glass-card{grid-template-columns:1fr;padding:28px 20px;gap:20px;border-radius:18px}
+  .hero-right{display:none}
+  .flag-mobile{display:block;margin-bottom:4px}
+  h1{font-size:clamp(30px,7.5vw,44px)}
+  .hero-sub{font-size:15px;line-height:1.7;margin-bottom:28px}
+  .hero-buttons{flex-direction:column;gap:10px}
+  .btn-primary{padding:14px 24px;font-size:15px;border-radius:10px;justify-content:center;width:100%}
+  .btn-secondary{padding:12px 24px;font-size:14px;border-radius:10px;text-align:center;width:100%}
+  .hero-badges{gap:8px}
+  .badge{padding:6px 12px;font-size:12px}
+  .blob-1{width:260px;height:260px;top:-60px;right:-40px}
+  .blob-2{width:220px;height:220px;bottom:-40px;left:-40px}
+  .blob-3{width:180px;height:180px}
+  .blob-4,.blob-5{display:none}
+  .eyebrow{font-size:11px;margin-bottom:20px;gap:8px}
+  .eyebrow-line{width:20px}
+
+  /* Sections */
+  .products,.why,.gallery,.faq,.promo,.cta{padding:70px 20px}
+  .products-grid,.why-grid,.gallery-grid{grid-template-columns:1fr}
+  .section-title{font-size:clamp(28px,6vw,40px)}
+  .section-sub{margin-bottom:32px}
+
+  /* Promo */
+  .promo-gifts{flex-direction:column;align-items:center}
+
+  /* Footer */
+  .footer{padding:40px 20px 24px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px 20px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
+}
+@media(max-width:380px){
+  .header{left:8px;right:8px;padding:0 10px;height:48px}
+  .header-brand small{display:none}
+  .header-cta{padding:6px 14px;font-size:11px}
+  .glass-card{padding:24px 16px}
+  h1{font-size:clamp(26px,7vw,36px)}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SECTION 1: HEADER ===== -->
+<header class="header">
+  <div class="header-left">
+    <img src="logo.png" alt="VDKR" class="header-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="logo-fallback" style="display:none">Н</div>
+    <div class="header-brand">Немецкий дом VDKR<small>Бишкек · с 1992 года</small></div>
+  </div>
+  <nav class="header-nav">
+    <a href="#products">Программы</a>
+    <a href="#why">О нас</a>
+    <a href="#faq">Вопросы</a>
+    <a href="https://www.instagram.com/vdkr.org_/" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+  <a href="https://wa.me/996700646629" class="header-cta" target="_blank" rel="noopener">Записаться →</a>
+</header>
+
+<!-- ===== SECTION 2: HERO ===== -->
+<section class="hero">
+  <div class="flag-stripe"><span></span><span></span><span></span></div>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="blob blob-5"></div>
+
+  <div class="glass-card">
+    <div class="hero-left">
+      <div class="eyebrow">
+        <div class="mini-flag"><span></span><span></span><span></span></div>
+        <div class="eyebrow-line"></div>
+        Программа МВД Германии · Бишкек
+      </div>
+      <h1>Немецкий язык -<br><em>твой путь в Германию</em></h1>
+      <p class="hero-sub">Курсы с нуля, интенсивная подготовка и первый международный экзамен TELC в Кыргызстане. Ассистент из Германии - здесь, в Бишкеке.</p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/996700646629?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F" class="btn-primary" target="_blank" rel="noopener">Записаться в WhatsApp</a>
+        <a href="#products" class="btn-secondary">Смотреть программы →</a>
+      </div>
+      <div class="hero-badges">
+        <div class="badge">↗ Курс А1</div>
+        <div class="badge">↗ Интенсив · 27 апреля</div>
+        <div class="badge">↗ Экзамен TELC · Май</div>
+      </div>
+    </div>
+
+    <div class="flag-mobile">
+      <span></span><span></span><span></span>
+      <div class="flag-mobile-label">Deutschland</div>
+    </div>
+
+    <div class="hero-right">
+      <div class="flag-big">
+        <span></span><span></span><span></span>
+        <div class="flag-label">Deutschland</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">33</div><div class="stat-label">года работы</div></div>
+        <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">филиалов</div></div>
+        <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">чел в группе</div></div>
+        <div class="stat-card"><div class="stat-num">A1-B2</div><div class="stat-label">уровни</div></div>
+      </div>
+      <div class="hero-note">Единственная организация в КР с языковым ассистентом из Германии и сертификацией TELC</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 3: PRODUCTS ===== -->
+<section class="products" id="products">
+  <div class="reveal">
+    <div class="section-title">Три программы</div>
+    <div class="section-sub">Выбери свой путь</div>
+  </div>
+  <div class="products-grid">
+
+    <!-- Card 1: Курс А1 -->
+    <div class="product-card reveal">
+      <div class="card-stripe purple"></div>
+      <div class="card-body">
+        <div class="card-badge">Курс немецкого</div>
+        <div class="card-title">Курс А1</div>
+        <div class="card-promo">🎁 До 30 апреля - книга + Talking Club в подарок</div>
+        <ul class="card-list">
+          <li>4 месяца с нуля</li>
+          <li>Пн-Пт 18:00-20:15</li>
+          <li>До 15 человек в группе</li>
+          <li>Ассистент из Германии</li>
+          <li>Рассрочка через M+</li>
+        </ul>
+        <div class="card-price">24 000 сом</div>
+        <div class="card-price-sub">6 000 сом/мес · рассрочка доступна</div>
+        <a href="https://wa.me/996700646629?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BA%D1%83%D1%80%D1%81%20%D0%901" class="card-btn dark" target="_blank" rel="noopener">Записаться на курс А1</a>
+      </div>
+    </div>
+
+    <!-- Card 2: Интенсив (featured) -->
+    <div class="product-card featured reveal">
+      <div class="card-stripe terra"></div>
+      <div class="card-body">
+        <div class="card-badge">Старт 27 апреля <span class="card-hot">Горячее</span></div>
+        <div class="card-title">Интенсив</div>
+        <ul class="card-list">
+          <li>1 неделя подготовки</li>
+          <li>Программа TELC</li>
+          <li>Ассистент из Германии</li>
+          <li>Пробный экзамен</li>
+          <li>После - TELC в мае</li>
+        </ul>
+        <div class="card-deadline">Запись до 23 апреля · Мест ограничено</div>
+        <a href="https://wa.me/996700646629?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B8%D0%BD%D1%82%D0%B5%D0%BD%D1%81%D0%B8%D0%B2" class="card-btn terra" target="_blank" rel="noopener">Записаться на интенсив</a>
+      </div>
+    </div>
+
+    <!-- Card 3: TELC -->
+    <div class="product-card reveal">
+      <div class="card-stripe blue"></div>
+      <div class="card-body">
+        <div class="card-badge">Май 2025</div>
+        <div class="card-title">Экзамен TELC</div>
+        <ul class="card-list">
+          <li>Уровни А1-В2</li>
+          <li>Признается в Германии, Австрии, Швейцарии</li>
+          <li>Представители из Германии</li>
+          <li>Альтернатива Гете-Институту</li>
+          <li>Учился где угодно - приходи и сдавай</li>
+        </ul>
+        <div class="card-deadline">Запись до 30 апреля</div>
+        <a href="https://wa.me/996700646629?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D1%8D%D0%BA%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%20TELC" class="card-btn blue" target="_blank" rel="noopener">Записаться на TELC</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== SECTION 4: WHY US ===== -->
+<section class="why" id="why">
+  <div class="reveal">
+    <div class="section-title">Почему VDKR</div>
+    <div class="section-sub">6 причин учить немецкий у нас</div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🇩🇪</div>
+      <h3>Ассистент из Германии</h3>
+      <p>Единственная организация в КР с языковым ассистентом напрямую из Германии. Живой язык, реальное произношение.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📜</div>
+      <h3>Первый TELC в КР</h3>
+      <p>Международный экзамен, признаваемый в Германии, Австрии и Швейцарии. Альтернатива Гете-Институту без очередей.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">👥</div>
+      <h3>До 15 человек</h3>
+      <p>Маленькие группы - больше внимания каждому. Индивидуальный подход и разговорная практика.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🏛</div>
+      <h3>Гос. программа с 1992</h3>
+      <p>Финансирование Федерального министерства внутренних дел Германии. 33 года стабильной работы.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">💳</div>
+      <h3>Рассрочка через M+</h3>
+      <p>24 000 сом за 4 месяца. Рассрочка без переплат через M+. Доступно и удобно.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📍</div>
+      <h3>7 филиалов по КР</h3>
+      <p>Бишкек и ещё 6 филиалов по всему Кыргызстану. Немецкий дом рядом с тобой.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 5: PROMO BANNER ===== -->
+<section class="promo reveal">
+  <div class="promo-content">
+    <h2>До 30 апреля - два подарка при записи</h2>
+    <div class="promo-sub">Только для тех, кто записывается сейчас</div>
+    <div class="promo-gifts">
+      <div class="promo-gift">📚 Учебник - бесплатно</div>
+      <div class="promo-gift">🗣 Talking Club - бесплатно</div>
+    </div>
+    <a href="https://wa.me/996700646629?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B4%D0%BE%2030%20%D0%B0%D0%BF%D1%80%D0%B5%D0%BB%D1%8F" class="btn-primary" target="_blank" rel="noopener">Записаться до 30 апреля</a>
+  </div>
+</section>
+
+<!-- ===== SECTION 6: GALLERY ===== -->
+<section class="gallery">
+  <div class="reveal">
+    <div class="section-title">Жизнь Немецкого дома</div>
+    <div class="section-sub">Посмотри как у нас</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder"><span>📖</span>Языковые курсы<br>и мастер-классы</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder"><span>🎭</span>Культурные мероприятия<br>и праздники</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder"><span>🤝</span>Молодежные проекты<br>и волонтерство</div>
+    </div>
+  </div>
+  <a href="https://www.instagram.com/vdkr.org_/" class="gallery-btn reveal" target="_blank" rel="noopener">Смотреть Instagram @vdkr.org_</a>
+</section>
+
+<!-- ===== SECTION 7: FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="reveal">
+    <div class="section-title">Вопросы</div>
+    <div class="section-sub">Частые вопросы и ответы</div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Нужна ли подготовка для курса А1?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">Нет. Курс А1 начинается с абсолютного нуля - алфавит, базовые фразы, произношение. Никакой предварительной подготовки не нужно.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Что такое TELC и чем отличается от Гете-Института?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">TELC - международный экзамен немецкого. Признается в Германии, Австрии и Швейцарии так же как Гете. Мы второй центр в Бишкеке - нет очередей.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Могу сдать TELC если учился в другой школе?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">Да. TELC независимый экзамен. Не важно где учился - приходишь, записываешься, сдаешь.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Как работает рассрочка M+?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">Скачиваешь приложение M+, выбираешь рассрочку при оформлении. Делится на несколько месяцев без переплат.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Для кого интенсив - нужна ли база немецкого?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">Для тех у кого есть база А1-А2. Если учишь немецкий или учился раньше - ты подходишь. За 5 дней готовим к TELC.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 8: FINAL CTA ===== -->
+<section class="cta">
+  <div class="reveal">
+    <h2>Готов начать?</h2>
+    <p>Напишем в течение часа и подберем программу</p>
+    <a href="https://wa.me/996700646629" class="cta-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Написать в WhatsApp
+    </a>
+    <div class="cta-info">г. Бишкек, ул. Никитина 14 · 7 филиалов по Кыргызстану · @vdkr.org_</div>
+  </div>
+</section>
+
+<!-- ===== SECTION 9: FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-brand">Немецкий дом VDKR</div>
+      <div class="footer-brand-sub">Народный Совет немцев<br>Кыргызской Республики</div>
+      <p>Осуществляет деятельность с 1992 года. Координирует работу представителей немецкой диаспоры в КР.</p>
+      <div class="footer-bmi">При поддержке Федерального министерства внутренних дел и родины Германии</div>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+996312903915">+996 (312) 90-39-15</a>
+      <a href="https://wa.me/996700646629" target="_blank" rel="noopener">+996 700 646 629</a>
+      <a href="mailto:dh.kirgistan@gmail.com">dh.kirgistan@gmail.com</a>
+      <p style="margin-top:8px">г. Бишкек, ул. Никитина 14</p>
+    </div>
+    <div class="footer-col">
+      <h4>Программы</h4>
+      <a href="#products">Курс А1</a>
+      <a href="#products">Интенсив</a>
+      <a href="#products">Экзамен TELC</a>
+      <a href="#faq">Вопросы</a>
+    </div>
+    <div class="footer-col">
+      <h4>Мы в сети</h4>
+      <a href="https://www.instagram.com/vdkr.org_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@volksratderdeutschenderkr869" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.facebook.com/vdkr.org" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://vdkr.kg/" target="_blank" rel="noopener">vdkr.kg</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2025 VDKR - Немецкий дом · Народный Совет немцев КР</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vdkr.org_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/996700646629" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://vdkr.kg/" target="_blank" rel="noopener">vdkr.kg</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JS ===== -->
+<script>
+// FAQ Accordion
+function toggleFaq(el){
+  const item=el.parentElement;
+  const answer=item.querySelector('.faq-a');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight=null;
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    answer.style.maxHeight=answer.scrollHeight+'px';
+  }
+}
+
+// Load content from content.json and hydrate page
+function waLink(phone,text){return'https://wa.me/'+phone+'?text='+encodeURIComponent(text)}
+
+fetch('content.json').then(r=>r.json()).then(c=>{
+  const wa=c.contacts.whatsapp;
+  const ig=c.contacts.instagram;
+
+  // Hero
+  const h=c.hero;
+  document.querySelector('.eyebrow').lastChild.textContent=' '+h.eyebrow;
+  document.querySelector('h1').innerHTML=h.h1_line1+'<br><em>'+h.h1_line2+'</em>';
+  document.querySelector('.hero-sub').textContent=h.subtitle;
+  document.querySelector('.hero-buttons .btn-primary').textContent=h.btn_primary;
+  document.querySelector('.hero-buttons .btn-secondary').textContent=h.btn_secondary;
+  document.querySelectorAll('.hero-badges .badge').forEach((b,i)=>{if(h.badges[i])b.textContent=h.badges[i]});
+  document.querySelectorAll('.stats-grid .stat-card').forEach((s,i)=>{
+    if(h.stats[i]){s.querySelector('.stat-num').textContent=h.stats[i].num;s.querySelector('.stat-label').textContent=h.stats[i].label}
+  });
+  document.querySelector('.hero-note').textContent=h.note;
+
+  // Products
+  const p=c.products;
+  document.querySelector('#products .section-title').textContent=p.title;
+  document.querySelector('#products .section-sub').textContent=p.subtitle;
+  const grid=document.querySelector('.products-grid');
+  grid.innerHTML='';
+  p.cards.forEach(card=>{
+    if(!card.visible)return;
+    let html='<div class="product-card'+(card.hot?' featured':'')+' reveal">';
+    html+='<div class="card-stripe '+card.stripe+'"></div><div class="card-body">';
+    html+='<div class="card-badge">'+card.badge+(card.hot?' <span class="card-hot">Горячее</span>':'')+'</div>';
+    html+='<div class="card-title">'+card.title+'</div>';
+    if(card.promo)html+='<div class="card-promo">'+card.promo+'</div>';
+    html+='<ul class="card-list">'+card.list.map(l=>'<li>'+l+'</li>').join('')+'</ul>';
+    if(card.price)html+='<div class="card-price">'+card.price+'</div>';
+    if(card.price_sub)html+='<div class="card-price-sub">'+card.price_sub+'</div>';
+    if(card.deadline)html+='<div class="card-deadline">'+card.deadline+'</div>';
+    html+='<a href="'+waLink(wa,card.wa_text)+'" class="card-btn '+card.btn_style+'" target="_blank" rel="noopener">'+card.btn_text+'</a>';
+    html+='</div></div>';
+    grid.insertAdjacentHTML('beforeend',html);
+  });
+
+  // Why Us
+  const w=c.why;
+  document.querySelector('#why .section-title').textContent=w.title;
+  document.querySelector('#why .section-sub').textContent=w.subtitle;
+  const wg=document.querySelector('.why-grid');
+  wg.innerHTML=w.cards.map(card=>
+    '<div class="why-card reveal"><div class="why-icon">'+card.icon+'</div><h3>'+card.title+'</h3><p>'+card.text+'</p></div>'
+  ).join('');
+
+  // Promo
+  const pr=c.promo;
+  const promoEl=document.querySelector('.promo');
+  if(!pr.visible){promoEl.style.display='none'}else{
+    promoEl.querySelector('h2').textContent=pr.title;
+    promoEl.querySelector('.promo-sub').textContent=pr.subtitle;
+    promoEl.querySelector('.promo-gifts').innerHTML=pr.gifts.map(g=>'<div class="promo-gift">'+g+'</div>').join('');
+    promoEl.querySelector('.btn-primary').textContent=pr.btn_text;
+    promoEl.querySelector('.btn-primary').href=waLink(wa,pr.wa_text);
+  }
+
+  // FAQ
+  const f=c.faq;
+  document.querySelector('#faq .section-title').textContent=f.title;
+  document.querySelector('#faq .section-sub').textContent=f.subtitle;
+  document.querySelector('.faq-list').innerHTML=f.items.map(item=>
+    '<div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>'+item.q+'</span><div class="faq-toggle">+</div></div><div class="faq-a"><div class="faq-a-inner">'+item.a+'</div></div></div>'
+  ).join('');
+
+  // CTA
+  const ct=c.cta;
+  document.querySelector('.cta h2').textContent=ct.title;
+  document.querySelector('.cta p').textContent=ct.subtitle;
+  document.querySelector('.cta-btn').lastChild.textContent=' '+ct.btn_text;
+  document.querySelector('.cta-info').textContent=ct.info;
+
+  // Contacts in footer
+  const co=c.contacts;
+  document.querySelector('.footer-col:nth-child(2)').innerHTML=
+    '<h4>Контакты</h4><a href="tel:'+co.phone.replace(/[^+\d]/g,'')+'">'+co.phone+'</a><a href="https://wa.me/'+co.whatsapp+'" target="_blank" rel="noopener">'+co.phone2+'</a><a href="mailto:'+co.email+'">'+co.email+'</a><p style="margin-top:8px">'+co.address+'</p>';
+
+  // Re-observe reveals for dynamically added elements
+  document.querySelectorAll('.reveal:not(.in)').forEach(el=>observer.observe(el));
+
+}).catch(()=>{/* fallback: use static HTML content */});
+
+// Scroll reveal with IntersectionObserver
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
